@@ -1,0 +1,392 @@
+  @import url("https://fonts.googleapis.com/css?family=Ubuntu:700");
+
+@keyframes slideFadeDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes slideFadeUp {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+body {
+  font-family: "Ubuntu";
+  font-weight: 700;
+  font-size: 13px;
+  color: #203950;
+}
+
+@keyframes line {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.game-wrap {
+  max-width: 280px;
+  margin: 100px auto 0;
+  padding: 20px 20px 30px;
+  border: 1px solid #79cadc;
+  box-sizing: border-box;
+  box-shadow: 1px 6px 30px 0 rgba(#79cadc, 0.4);
+  position: relative;
+
+  @media (max-width: 480px) {
+    margin-top: 10px;
+  }
+
+  button {
+    outline: 0;
+    border: 0;
+    background: transparent no-repeat center;
+    background-size: cover;
+  }
+
+  .piece-chooser-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(#fff, 0.95);
+    z-index: 9;
+    padding: 60px 20px 20px;
+    box-sizing: border-box;
+    text-align: center;
+
+    transform: translateY(0);
+    transition: all 0.2s ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-name: slideFadeUp;
+
+    &.inactive {
+      animation-name: slideFadeDown;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin: 36px 0;
+    }
+
+    .piece-chooser {
+      display: flex;
+      justify-content: center;
+
+      span {
+        margin: auto 15px;
+        color: #b1bbc6;
+        font-size: 24px;
+      }
+    }
+
+    button {
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        transform: scale(1.15);
+      }
+
+      &.side-x {
+        background-image: url(images/x.png);
+      }
+
+      &.side-o {
+        background-image: url(images/o.png);
+      }
+    }
+  }
+
+  .status {
+    display: flex;
+
+    > div {
+      flex: 1 1 0;
+      text-align: center;
+      position: relative;
+
+      &:before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin: 0 auto;
+        margin-bottom: 5px;
+        background-size: cover;
+        background-repeat: none;
+      }
+    }
+
+    .status-x {
+      color: #3a98d4;
+
+      &:before {
+        background-image: url(images/x.png);
+      }
+    }
+
+    .status-o {
+      color: #39bcd4;
+
+      &:before {
+        background-image: url(images/o.png);
+      }
+    }
+
+    .status-d {
+      color: #91a2ab;
+
+      &:before {
+        background-image: url(images/d.png);
+      }
+    }
+  }
+}
+
+.board-wrap {
+  margin: 40px 10px;
+  position: relative;
+
+  .winning-line-wrap {
+    position: absolute;
+    box-sizing: border-box;
+    padding: 0 5px;
+    z-index: 22;
+    width: 100%;
+    display: none;
+
+    &[class*=winning-line-wrap-] {
+      display: block;
+
+      .winning-line {
+        animation-name: line;
+      }
+    }
+
+    .winning-line {
+      height: 5px;
+      margin-top: -3px;
+      background: #fd6593;
+      transition: all 0.2s ease-in-out;
+      animation-duration: 0.6s;
+      animation-iteration-count: 1;
+      animation-timing-function: ease-in-out;
+    }
+  }
+
+  .winning-line-wrap-0-2 {
+    top: 16.6667%;
+  }
+
+  .winning-line-wrap-3-5 {
+    top: 50%;
+  }
+
+  .winning-line-wrap-6-8 {
+    top: 83.3333%;
+  }
+
+  .winning-line-wrap-0-6,
+  .winning-line-wrap-1-7,
+  .winning-line-wrap-2-8 {
+    transform: rotate(90deg);
+    transform-origin: top left;
+  }
+
+  .winning-line-wrap-0-6 {
+    left: 16.6667%;
+  }
+
+  .winning-line-wrap-1-7 {
+    left: 50%;
+  }
+
+  .winning-line-wrap-2-8 {
+    left: 83.3333%;
+  }
+
+  .winning-line-wrap-0-8,
+  .winning-line-wrap-2-6 {
+    width: 140.4214%;
+    padding: 0 10px;
+    transform-origin: top left;
+  }
+
+  .winning-line-wrap-0-8 {
+    transform: rotate(45.3deg);
+  }
+
+  .winning-line-wrap-2-6 {
+    bottom: -2px;
+    transform: rotate(-45.2deg);
+  }
+
+  .board-row {
+    display: flex;
+
+    &:last-child .square {
+      border-bottom: 0;
+    }
+
+    .square {
+      width: 33.33%;
+      position: relative;
+      cursor: pointer;
+      background-size: 65% 65%;
+      padding: 0;
+      margin: 0;
+      border-right: 1px solid #d6e6ea;
+      border-bottom: 1px solid #d6e6ea;
+
+      &:last-child {
+        border-right: 0;
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        padding-top: 100%;
+      }
+    }
+
+    .square-x,
+    .square-o {
+      cursor: auto;
+    }
+
+    .square-x {
+      background-image: url(images/x.png);
+    }
+
+    .square-o {
+      background-image: url(images/o.png);
+    }
+  }
+}
+
+.move-status-wrap {
+  text-align: center;
+
+  .move-status {
+    display: inline-flex;
+    margin: 0 auto;
+    border: 1px solid rgba(#d6e6ea, 0.6);
+    border-radius: 24px;
+
+    span {
+      display: inline-flex;
+      border-radius: 50%;
+      padding: 8px;
+      margin-right: 3px;
+      transition: all 0.1s;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.active {
+        transform: scale(1.15);
+
+        &.o-move {
+          background: darken(#79cadc, 10%);
+        }
+
+        &.x-move {
+          background: darken(#3a98d4, 10%);
+        }
+
+        img {
+          filter: brightness(0) invert(1);
+        }
+      }
+    }
+
+    img {
+      width: 13px;
+      height: 13px;
+    }
+  }
+}
+
+.buttons-wrap {
+  margin: 30px 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    width: 78px;
+    height: 48px;
+    display: flex;
+
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    // border-radius: 50%;
+    border: 1px solid rgba(#a4b5b8, 0.4);
+    position: relative;
+    cursor: pointer;
+
+    &:after {
+      content: "";
+      width: 78px;
+      height: 48px;
+      // border-radius: 50%;
+      background: #909599 no-repeat center;
+      background-size: 80px;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: all 0.4s;
+    }
+
+    &:hover {
+      border-color: rgba(#277db4, 0.4);
+
+      &:after {
+        background-color: #277db4;
+      }
+    }
+
+    &.button-reset:after {
+      background-image: url(https://e7.pngegg.com/pngimages/178/980/png-clipart-push-button-reset-button-computer-icons-reset-button-trademark-photography.png);
+    }
+
+    &.button-config:after {
+      background-image: url(images/config.svg);
+    }
+  }
+
+  .game-mode-status {
+    color: #a4b5b8;
+    font-size: 12px;
+    border: 1px solid rgba(#a4b5b8, 0.4);
+    padding: 6px 8px;
+    border-radius: 30px;
+    text-transform: uppercase;
+  }
+}
